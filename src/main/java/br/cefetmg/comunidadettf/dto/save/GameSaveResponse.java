@@ -8,12 +8,18 @@ public record GameSaveResponse(
         String difficulty,
         String sceneName,
         String checkpointId,
-        float checkpointX,
-        float checkpointY,
-        float checkpointZ,
+        int checkpoint,
+        
         String collectedIdsJson,
         String deadEnemyIdsJson,
         float completionPercent,
+        Integer qttAppleCollected,
+        Integer qttGlassCollected,
+        Integer qttPlasticCollected,
+        Integer qttElectronicsCollected,
+        Integer qttPaperCollected,
+        Integer qttMetalCollected,
+        Integer Score,
         String lastSavedAtUtc
 ) {
 }

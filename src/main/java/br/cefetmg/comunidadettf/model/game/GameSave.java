@@ -2,11 +2,14 @@ package br.cefetmg.comunidadettf.model.game;
 
 import java.time.LocalDateTime;
 
+import br.cefetmg.comunidadettf.model.Usuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -21,18 +24,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(
-        name = "game_saves",
-        uniqueConstraints = @UniqueConstraint(name = "uq_game_saves_user_slot", columnNames = { "user_id", "slot_index" })
-)
+@Table(name = "game_saves", uniqueConstraints = @UniqueConstraint(name = "uq_game_saves_user_slot", columnNames = {
+        "user_id", "slot_index" }))
 public class GameSave {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Usuario usuario;
 
     @Column(name = "slot_index", nullable = false)
     private Integer slotIndex;
@@ -55,14 +57,10 @@ public class GameSave {
     @Column(name = "checkpoint_id", length = 120, nullable = false)
     private String checkpointId;
 
-    @Column(name = "checkpoint_x", nullable = false)
-    private Float checkpointX;
+    @Column(name = "checkpoint", nullable = false)
+    private Integer checkpoint;
 
-    @Column(name = "checkpoint_y", nullable = false)
-    private Float checkpointY;
-
-    @Column(name = "checkpoint_z", nullable = false)
-    private Float checkpointZ;
+   
 
     @Column(name = "collected_ids_json", columnDefinition = "JSON", nullable = false)
     private String collectedIdsJson;
@@ -75,6 +73,27 @@ public class GameSave {
 
     @Column(name = "last_saved_at_utc", nullable = false)
     private LocalDateTime lastSavedAtUtc;
+
+    @Column(name = "qtt_AppleCollected", nullable = false)
+    private Integer qttAppleCollected;
+
+    @Column(name = "qtt_GlassCollected", nullable = false)
+    private Integer qttGlassCollected;
+
+    @Column(name = "qtt_PlasticCollected", nullable = false)
+    private Integer qttPlasticCollected;
+
+    @Column(name = "qtt_EletronicsCollected", nullable = false)
+    private Integer qttEletronicsCollected;
+
+    @Column(name = "qtt_PaperCollected", nullable = false)
+    private Integer qttPaperCollected;
+
+    @Column(name = "qtt_MetalCollected", nullable = false)
+    private Integer qttMetalCollected;
+
+    @Column(name = "Score", nullable = false)
+    private Integer score;
 
     @PrePersist
     @PreUpdate

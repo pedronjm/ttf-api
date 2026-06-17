@@ -10,11 +10,18 @@ public record GameSaveUpsertRequest(
         String difficulty,
         String sceneName,
         String checkpointId,
-        float checkpointX,
-        float checkpointY,
-        float checkpointZ,
+        int checkpoint,
+       
         List<String> collectedIds,
         List<String> deadEnemyIds,
-        float completionPercent
+        float completionPercent,
+        Integer qttAppleCollected,
+        Integer qttGlassCollected,
+        Integer qttPlasticCollected,
+        Integer qttEletronicsCollected,
+        Integer qttPaperCollected,
+        Integer qttMetalCollected,
+        Integer Score
+
 ) {
 }

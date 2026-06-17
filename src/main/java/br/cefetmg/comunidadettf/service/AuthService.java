@@ -71,7 +71,7 @@ public class AuthService {
         }
 
         if (nome.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome e obrigatorio.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome é obrigatorio.");
         }
 
         if (password.length() < 6) {
