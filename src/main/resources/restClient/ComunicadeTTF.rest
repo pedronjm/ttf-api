@@ -1,94 +1,71 @@
 ### Health
-GET http://localhost:8080/health HTTP/1.1
+GET http://localhost:8080/health
 
-###
 
-GET http://localhost:8080/home HTTP/1.1
+### Register
 
-### Auth
-POST http://localhost:8080/auth/register HTTP/1.1
+POST http://localhost:8080/auth/register
 Content-Type: application/json
 
 {
-    "login": "sample@gmail.com",
-    "password": "123456",
-    "nome": "Usuario Teste"
+    "login":"srwedsar.com",
+    "password":"123456",
+    "nome":"werwedsre"
 }
 
-###
 
-POST http://localhost:8080/auth/login HTTP/1.1
+### Login
+
+POST http://localhost:8080/auth/login
 Content-Type: application/json
 
 {
-    "login": "sample@gmail.com",
-    "password": "123456"
+    "login":"sample@gmail.com",
+    "password":"123456"
 }
 
-### Usuarios
-GET http://localhost:8080/api/v1/usuarios HTTP/1.1
 
-###
+### Listar saves
 
-GET http://localhost:8080/api/v1/usuarios/1 HTTP/1.1
+GET http://localhost:8080/saves
+Authorization: eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzYW1wbGVAZ21haWwuY29tIiwibm9tZSI6IlVzdWFyaW8gVGVzdGUiLCJpYXQiOjE3ODE3NDA1MTcsImV4cCI6MTc4MTc0NzcxN30.8UkwLc4ckPx6jF0zZwmouDcw_RvpYOgjzxt255l14qAvAviPOBnIHJ6Tlynjyw88
 
-###
 
-POST http://localhost:8080/api/v1/usuarios HTTP/1.1
+### Buscar slot 0
+
+GET http://localhost:8080/saves/0
+Authorization: Bearer COLOQUE_TOKEN
+
+
+### Salvar
+
+PUT http://localhost:8080/saves
 Content-Type: application/json
+Authorization: Bearer COLOQUE_TOKEN
 
 {
-    "nome": "Usuario Teste",
-    "email": "sample@gmail.com"
+    "slotIndex":0,
+    "slotName":"Save 1",
+    "selectedCharacter":"Knight",
+    "playTutorial":true,
+    "difficulty":"NORMAL",
+    "sceneName":"IntroScene",
+    "checkpointId":"cp_001",
+    "checkpoint":1,
+    "collectedIdsJson":"[\"item_1\",\"item_2\"]",
+    "deadEnemyIdsJson":"[\"enemy_1\"]",
+    "completionPercent":12.5,
+    "qttAppleCollected":0,
+    "qttGlassCollected":0,
+    "qttPlasticCollected":0,
+    "qttEletronicsCollected":0,
+    "qttPaperCollected":0,
+    "qttMetalCollected":0,
+    "Score":0
 }
 
-###
 
-PUT http://localhost:8080/api/v1/usuarios HTTP/1.1
-Content-Type: application/json
+### Deletar
 
-{
-    "id": 1,
-    "nome": "Usuario Atualizado",
-    "email": "sample.updated@gmail.com"
-}
-
-###
-
-DELETE http://localhost:8080/api/v1/usuarios/1 HTTP/1.1
-
-### Saves
-GET http://localhost:8080/saves HTTP/1.1
-Authorization: Bearer <cole-aqui-o-access-token-do-login>
-
-###
-
-GET http://localhost:8080/saves/0 HTTP/1.1
-Authorization: Bearer <cole-aqui-o-access-token-do-login>
-
-###
-
-PUT http://localhost:8080/saves HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer <cole-aqui-o-access-token-do-login>
-
-{
-    "slotIndex": 0,
-    "slotName": "Slot 1",
-    "selectedCharacter": "Knight",
-    "playTutorial": true,
-    "difficulty": "NORMAL",
-    "sceneName": "IntroScene",
-    "checkpointId": "cp_001",
-    "checkpointX": 0,
-    "checkpointY": 0,
-    "checkpointZ": 0,
-    "collectedIds": ["item_1", "item_2"],
-    "deadEnemyIds": ["enemy_1"],
-    "completionPercent": 12.5
-}
-
-###
-
-DELETE http://localhost:8080/saves/0 HTTP/1.1
-Authorization: Bearer <cole-aqui-o-access-token-do-login>
+DELETE http://localhost:8080/saves/0
+Authorization: Bearer COLOQUE_TOKEN

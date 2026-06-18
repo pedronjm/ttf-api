@@ -11,9 +11,9 @@ import br.cefetmg.comunidadettf.model.game.GameSave;
 @Repository
 public interface GameSaveRepository extends JpaRepository<GameSave, Long> {
 
-    List<GameSave> findByUserIdOrderBySlotIndexAsc(Long userId);
+    List<GameSave> findByUsuario_IdOrderBySlotIndexAsc(Long usuarioId);
 
-    Optional<GameSave> findByUserIdAndSlotIndex(Long userId, Integer slotIndex);
+    Optional<GameSave> findByUsuario_IdAndSlotIndex(Long usuarioId, Integer slotIndex);
 
-    long deleteByUserIdAndSlotIndex(Long userId, Integer slotIndex);
+    long deleteByUsuario_IdAndSlotIndex(Long usuarioId, Integer slotIndex);
 }

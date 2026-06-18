@@ -2,7 +2,7 @@ package br.cefetmg.comunidadettf.model.game;
 
 import java.time.LocalDateTime;
 
-import br.cefetmg.comunidadettf.model.Usuario;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,7 +34,7 @@ public class GameSave {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Usuario usuario;
+    private GameUser usuario;
 
     @Column(name = "slot_index", nullable = false)
     private Integer slotIndex;
@@ -60,8 +60,6 @@ public class GameSave {
     @Column(name = "checkpoint", nullable = false)
     private Integer checkpoint;
 
-   
-
     @Column(name = "collected_ids_json", columnDefinition = "JSON", nullable = false)
     private String collectedIdsJson;
 
@@ -74,25 +72,25 @@ public class GameSave {
     @Column(name = "last_saved_at_utc", nullable = false)
     private LocalDateTime lastSavedAtUtc;
 
-    @Column(name = "qtt_AppleCollected", nullable = false)
+    @Column(name = "qtt_apple_collected", nullable = false)
     private Integer qttAppleCollected;
 
-    @Column(name = "qtt_GlassCollected", nullable = false)
+    @Column(name = "qtt_glass_collected", nullable = false)
     private Integer qttGlassCollected;
 
-    @Column(name = "qtt_PlasticCollected", nullable = false)
+    @Column(name = "qtt_plastic_collected", nullable = false)
     private Integer qttPlasticCollected;
 
-    @Column(name = "qtt_EletronicsCollected", nullable = false)
-    private Integer qttEletronicsCollected;
+    @Column(name = "qtt_electronics_collected", nullable = false)
+    private Integer qttElectronicsCollected;
 
-    @Column(name = "qtt_PaperCollected", nullable = false)
+    @Column(name = "qtt_paper_collected", nullable = false)
     private Integer qttPaperCollected;
 
-    @Column(name = "qtt_MetalCollected", nullable = false)
+    @Column(name = "qtt_metal_collected", nullable = false)
     private Integer qttMetalCollected;
 
-    @Column(name = "Score", nullable = false)
+    @Column(name = "score", nullable = false)
     private Integer score;
 
     @PrePersist

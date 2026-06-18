@@ -9,7 +9,7 @@ public record GameSaveResponse(
         String sceneName,
         String checkpointId,
         int checkpoint,
-        
+
         String collectedIdsJson,
         String deadEnemyIdsJson,
         float completionPercent,
@@ -19,7 +19,7 @@ public record GameSaveResponse(
         Integer qttElectronicsCollected,
         Integer qttPaperCollected,
         Integer qttMetalCollected,
-        Integer Score,
+        Integer score,
         String lastSavedAtUtc
 ) {
 }

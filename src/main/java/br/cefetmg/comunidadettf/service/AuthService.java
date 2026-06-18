@@ -28,24 +28,40 @@ public class AuthService {
     }
 
     public AuthResponse register(RegisterRequest request) {
-        String login = normalize(request.login());
-        String password = normalize(request.password());
-        String nome = normalize(request.nome());
 
-        validateRegister(login, password, nome);
+    System.out.println("ENTROU NO REGISTER");
 
-        if (userRepository.existsByLoginIgnoreCase(login)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Usuario ja existe.");
-        }
+    String login = normalize(request.login());
+    String password = normalize(request.password());
+    String nome = normalize(request.nome());
 
-        GameUser user = new GameUser();
-        user.setLogin(login);
-        user.setNome(nome);
-        user.setPasswordHash(passwordEncoder.encode(password));
-        userRepository.save(user);
+    validateRegister(login, password, nome);
 
-        return new AuthResponse(jwtService.generateToken(user.getLogin(), user.getNome()), user.getLogin(), user.getNome());
+    System.out.println("LOGIN: " + login);
+
+    if (userRepository.existsByLoginIgnoreCase(login)) {
+        throw new ResponseStatusException(HttpStatus.CONFLICT, "Usuario ja existe.");
     }
+
+    GameUser user = new GameUser();
+
+    user.setLogin(login);
+    user.setNome(nome);
+    user.setPasswordHash(passwordEncoder.encode(password));
+
+    GameUser salvo = userRepository.save(user);
+
+    System.out.println("SALVO ID: " + salvo.getId());
+
+    return new AuthResponse(
+        jwtService.generateToken(
+            salvo.getLogin(),
+            salvo.getNome()
+        ),
+        salvo.getLogin(),
+        salvo.getNome()
+    );
+}
 
     public AuthResponse login(LoginRequest request) {
         String login = normalize(request.login());
