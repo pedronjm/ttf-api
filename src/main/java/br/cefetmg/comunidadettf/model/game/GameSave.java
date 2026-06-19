@@ -2,7 +2,6 @@ package br.cefetmg.comunidadettf.model.game;
 
 import java.time.LocalDateTime;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,8 +23,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "game_saves", uniqueConstraints = @UniqueConstraint(name = "uq_game_saves_user_slot", columnNames = {
-        "user_id", "slot_index" }))
+@Table(name = "game_saves", uniqueConstraints = @UniqueConstraint(
+        name = "uq_game_saves_user_slot",
+        columnNames = { "user_id", "slot_index" }))
 public class GameSave {
 
     @Id
@@ -92,6 +92,22 @@ public class GameSave {
 
     @Column(name = "score", nullable = false)
     private Integer score;
+
+    // ── Campos adicionados para a fase de testes ──────────────────────────────
+
+    /** Vida atual do jogador no momento do save. */
+    @Column(name = "current_health", nullable = false)
+    private Integer currentHealth = 0;
+
+    /** Vida máxima do personagem (varia por personagem/dificuldade). */
+    @Column(name = "max_health", nullable = false)
+    private Integer maxHealth = 0;
+
+    /** Número de mortes acumuladas neste save. */
+    @Column(name = "death_count", nullable = false)
+    private Integer deathCount = 0;
+
+    // ─────────────────────────────────────────────────────────────────────────
 
     @PrePersist
     @PreUpdate

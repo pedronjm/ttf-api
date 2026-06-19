@@ -36,12 +36,11 @@ public class GameSaveService {
 
         this.userRepository = userRepository;
         this.saveRepository = saveRepository;
-        this.objectMapper = objectMapper;
+        this.objectMapper   = objectMapper;
     }
 
     public List<GameSaveResponse> getAll(String login) {
         GameUser user = requireUser(login);
-
         return saveRepository
                 .findByUsuario_IdOrderBySlotIndexAsc(user.getId())
                 .stream()
@@ -51,21 +50,16 @@ public class GameSaveService {
 
     public GameSaveResponse getOne(String login, int slotIndex) {
         validateSlotIndex(slotIndex);
-
         GameUser user = requireUser(login);
-
         GameSave save = saveRepository
                 .findByUsuario_IdAndSlotIndex(user.getId(), slotIndex)
                 .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Save nao encontrado."));
-
+                        HttpStatus.NOT_FOUND, "Save nao encontrado."));
         return toResponse(save);
     }
 
     public GameSaveResponse upsert(String login, GameSaveUpsertRequest request) {
         validateSlotIndex(request.slotIndex());
-
         GameUser user = requireUser(login);
 
         GameSave save = saveRepository
@@ -92,41 +86,24 @@ public class GameSaveService {
         save.setQttMetalCollected(valueInt(request.qttMetalCollected()));
         save.setScore(valueInt(request.score()));
 
+        // ── Campos de teste ───────────────────────────────────────────────────
+        save.setCurrentHealth(valueInt(request.currentHealth()));
+        save.setMaxHealth(valueInt(request.maxHealth()));
+        save.setDeathCount(valueInt(request.deathCount()));
+        // ─────────────────────────────────────────────────────────────────────
+
         return toResponse(saveRepository.save(save));
     }
 
     public boolean delete(String login, int slotIndex) {
         validateSlotIndex(slotIndex);
-
         GameUser user = requireUser(login);
-
-        return saveRepository
-                .deleteByUsuario_IdAndSlotIndex(user.getId(), slotIndex) > 0;
+        return saveRepository.deleteByUsuario_IdAndSlotIndex(user.getId(), slotIndex) > 0;
     }
 
-    private GameUser requireUser(String login) {
-        String normalizedLogin = normalize(login);
-
-        if (normalizedLogin.isEmpty()) {
-            throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED,
-                    "Usuario nao autenticado.");
-        }
-
-        return userRepository
-                .findByLoginIgnoreCase(normalizedLogin)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.UNAUTHORIZED,
-                        "Usuario nao autenticado."));
-    }
-
-    private void validateSlotIndex(int slotIndex) {
-        if (slotIndex < MIN_SLOT_INDEX || slotIndex > MAX_SLOT_INDEX) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "Slot invalido. Use um valor entre 1 e 3.");
-        }
-    }
+    // ─────────────────────────────────────────────────────────────────────────
+    //  Helpers privados
+    // ─────────────────────────────────────────────────────────────────────────
 
     private GameSaveResponse toResponse(GameSave save) {
         return new GameSaveResponse(
@@ -148,10 +125,32 @@ public class GameSaveService {
                 save.getQttPaperCollected(),
                 save.getQttMetalCollected(),
                 save.getScore(),
+                // campos de teste
+                save.getCurrentHealth(),
+                save.getMaxHealth(),
+                save.getDeathCount(),
+                // timestamp
                 save.getLastSavedAtUtc() == null
                         ? null
                         : save.getLastSavedAtUtc().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
         );
+    }
+
+    private GameUser requireUser(String login) {
+        String normalized = normalize(login);
+        if (normalized.isEmpty())
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario nao autenticado.");
+
+        return userRepository
+                .findByLoginIgnoreCase(normalized)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED, "Usuario nao autenticado."));
+    }
+
+    private void validateSlotIndex(int slotIndex) {
+        if (slotIndex < MIN_SLOT_INDEX || slotIndex > MAX_SLOT_INDEX)
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Slot invalido. Use um valor entre 1 e 3.");
     }
 
     private String normalize(String value) {
@@ -159,29 +158,23 @@ public class GameSaveService {
     }
 
     private String normalizeOrDefault(String value, String defaultValue) {
-        String result = normalize(value);
-        return result.isEmpty() ? defaultValue : result;
+        String r = normalize(value);
+        return r.isEmpty() ? defaultValue : r;
     }
 
-    private String slotLabel(int slotIndex) {
-        return "Slot " + slotIndex;
-    }
+    private String slotLabel(int slotIndex) { return "Slot " + slotIndex; }
 
     private String toJsonArray(List<String> values) {
         try {
             return objectMapper.writeValueAsString(values == null ? List.of() : values);
         } catch (JsonProcessingException e) {
             throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Erro convertendo JSON do save.");
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Erro convertendo JSON do save.");
         }
     }
 
-    private Integer valueInt(Integer value) {
-        return value == null ? 0 : value;
-    }
-
-    private Float valueFloat(Float value) {
-        return value == null ? 0 : value;
-    }
+    private Integer valueInt(Integer value)  { return value == null ? 0 : value; }
+    private Integer valueInt(int value)      { return value; }
+    private Float   valueFloat(Float value)  { return value == null ? 0f : value; }
+    private Float   valueFloat(float value)  { return value; }
 }
