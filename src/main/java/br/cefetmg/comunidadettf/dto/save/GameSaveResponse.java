@@ -20,12 +20,6 @@ public record GameSaveResponse(
         Integer qttPaperCollected,
         Integer qttMetalCollected,
         Integer score,
-
-        // ── Campos de teste ──────────────────────────────────────────────────
-        Integer currentHealth,
-        Integer maxHealth,
-        Integer deathCount,
-        // ─────────────────────────────────────────────────────────────────────
-
         String lastSavedAtUtc
-) {}
+) {
+}
