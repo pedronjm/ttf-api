@@ -14,58 +14,61 @@ import br.cefetmg.comunidadettf.service.GameSaveService;
 @RequestMapping("/saves")
 public class GameSaveController {
 
-    private final GameSaveService saveService;
+        private final GameSaveService saveService;
 
-    public GameSaveController(GameSaveService saveService) {
+        public GameSaveController(GameSaveService saveService) {
 
-        this.saveService = saveService;
+                this.saveService = saveService;
 
-    }
+        }
 
-    @GetMapping
-    public List<GameSaveResponse> getAll(
-            Principal principal) {
+        @GetMapping
+        public List<GameSaveResponse> getAll(
+                        Principal principal) {
 
-        return saveService.getAll(
-                principal.getName());
+                return saveService.getAll(
+                                principal.getName());
 
-    }
+        }
 
-    @GetMapping("/{slotIndex}")
-    public GameSaveResponse getOne(
-            Principal principal,
-            @PathVariable int slotIndex) {
+        @GetMapping("/{slotIndex}")
+        public GameSaveResponse getOne(
+                        Principal principal,
+                        @PathVariable int slotIndex) {
 
-        return saveService.getOne(
-                principal.getName(),
-                slotIndex);
+                return saveService.getOne(
+                                principal.getName(),
+                                slotIndex);
 
-    }
+        }
 
-    @PutMapping
-    public GameSaveResponse save(
-            Principal principal,
-            @RequestBody GameSaveUpsertRequest request) {
+        @PutMapping
+        public GameSaveResponse save(
+                        Principal principal,
+                        @RequestBody GameSaveUpsertRequest request) {
 
-        return saveService.upsert(
-                principal.getName(),
-                request);
+                System.out.println(
+                                "PRINCIPAL: "
+                                                + principal);
 
-    }
+                return saveService.upsert(
+                                principal.getName(),
+                                request);
+        }
 
-    @DeleteMapping("/{slotIndex}")
-    public ResponseEntity<Void> delete(
-            Principal principal,
-            @PathVariable int slotIndex) {
+        @DeleteMapping("/{slotIndex}")
+        public ResponseEntity<Void> delete(
+                        Principal principal,
+                        @PathVariable int slotIndex) {
 
-        boolean deleted = saveService.delete(
-                principal.getName(),
-                slotIndex);
+                boolean deleted = saveService.delete(
+                                principal.getName(),
+                                slotIndex);
 
-        return deleted
-                ? ResponseEntity.noContent().build()
-                : ResponseEntity.notFound().build();
+                return deleted
+                                ? ResponseEntity.noContent().build()
+                                : ResponseEntity.notFound().build();
 
-    }
+        }
 
 }

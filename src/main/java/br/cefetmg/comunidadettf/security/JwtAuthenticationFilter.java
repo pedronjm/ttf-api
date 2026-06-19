@@ -28,8 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain
-    ) throws ServletException, IOException {
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
         String token = resolveToken(request);
 
         if (token != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -38,11 +37,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 var authentication = new UsernamePasswordAuthenticationToken(login, null, List.of());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            } catch (Exception ignored) {
+                System.out.println(
+                        "JWT ACEITO PARA USUARIO: "
+                                + login);
+            } catch (Exception e) {
+
+                System.out.println("ERRO VALIDANDO JWT: " + e.getMessage());
+
                 SecurityContextHolder.clearContext();
             }
         }
-
+        System.out.println(
+                "ROTA: "
+                        + request.getRequestURI()
+                        + " AUTH: "
+                        + SecurityContextHolder.getContext().getAuthentication());
         filterChain.doFilter(request, response);
     }
 

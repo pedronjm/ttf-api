@@ -91,6 +91,10 @@ public class GameSaveService {
         save.setQttPaperCollected(valueInt(request.qttPaperCollected()));
         save.setQttMetalCollected(valueInt(request.qttMetalCollected()));
         save.setScore(valueInt(request.score()));
+        save.setLastSavedAtUtc(java.time.LocalDateTime.now());
+        save.setMaxHealth(request.maxHealth());
+        save.setCurrentHealth(request.currentHealth());
+        save.setDeathCount(request.deathCount());
 
         return toResponse(saveRepository.save(save));
     }

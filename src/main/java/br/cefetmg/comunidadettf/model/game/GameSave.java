@@ -2,7 +2,6 @@ package br.cefetmg.comunidadettf.model.game;
 
 import java.time.LocalDateTime;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -92,6 +91,20 @@ public class GameSave {
 
     @Column(name = "score", nullable = false)
     private Integer score;
+
+    @Column(name = "current_health", nullable = false)
+    private Integer currentHealth;
+
+    
+    @Column(name = "death_count", nullable = false)
+    private Integer deathCount;
+
+    
+    @Column(name = "max_health", nullable = false)
+    private Integer maxHealth;
+
+
+
 
     @PrePersist
     @PreUpdate

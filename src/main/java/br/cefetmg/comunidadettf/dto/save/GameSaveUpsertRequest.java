@@ -21,6 +21,9 @@ public record GameSaveUpsertRequest(
         Integer qttElectronicsCollected,
         Integer qttPaperCollected,
         Integer qttMetalCollected,
-        Integer score
+        Integer score,
+        Integer maxHealth,
+        Integer currentHealth,
+        Integer deathCount
 ) {
 }
