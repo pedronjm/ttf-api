@@ -43,14 +43,10 @@ public class GameSaveController {
         }
 
         @PutMapping
-        public GameSaveResponse save(
-                        Principal principal,
-                        @RequestBody GameSaveUpsertRequest request) {
+        public GameSaveResponse save(Principal principal, @RequestBody GameSaveUpsertRequest request) {
 
-                System.out.println(
-                                "PRINCIPAL: "
-                                                + principal);
-
+                System.out.println("PRINCIPAL: " + principal);
+                System.out.println("SLOT RECEBIDO NO BACKEND: " + request.slotIndex());
                 return saveService.upsert(
                                 principal.getName(),
                                 request);

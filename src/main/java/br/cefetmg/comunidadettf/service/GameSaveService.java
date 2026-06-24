@@ -152,9 +152,13 @@ public class GameSaveService {
                 save.getQttPaperCollected(),
                 save.getQttMetalCollected(),
                 save.getScore(),
-                save.getLastSavedAtUtc() == null
-                        ? null
-                        : save.getLastSavedAtUtc().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                save.getLastSavedAtUtc() == null ? null : save.getLastSavedAtUtc().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
+                save.getMaxHealth(),
+                save.getCurrentHealth(),
+                save.getDeathCount()
+
+
+                       
         );
     }
 

@@ -20,6 +20,9 @@ public record GameSaveResponse(
         Integer qttPaperCollected,
         Integer qttMetalCollected,
         Integer score,
-        String lastSavedAtUtc
+        String lastSavedAtUtc,
+        Integer maxHealth,
+        Integer currentHealth,
+        Integer deathCount
 ) {
 }
