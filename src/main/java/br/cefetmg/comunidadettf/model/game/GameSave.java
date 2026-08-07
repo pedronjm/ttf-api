@@ -17,6 +17,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Getter
 @Setter
@@ -59,10 +61,12 @@ public class GameSave {
     @Column(name = "checkpoint", nullable = false)
     private Integer checkpoint;
 
-    @Column(name = "collected_ids_json", columnDefinition = "JSON", nullable = false)
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "collected_ids_json", nullable = false)
     private String collectedIdsJson;
 
-    @Column(name = "dead_enemy_ids_json", columnDefinition = "JSON", nullable = false)
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "dead_enemy_ids_json", nullable = false)
     private String deadEnemyIdsJson;
 
     @Column(name = "completion_percent", nullable = false)
@@ -95,16 +99,11 @@ public class GameSave {
     @Column(name = "current_health", nullable = false)
     private Integer currentHealth;
 
-    
     @Column(name = "death_count", nullable = false)
     private Integer deathCount;
 
-    
     @Column(name = "max_health", nullable = false)
     private Integer maxHealth;
-
-
-
 
     @PrePersist
     @PreUpdate
