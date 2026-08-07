@@ -11,7 +11,6 @@ public record GameSaveUpsertRequest(
         String sceneName,
         String checkpointId,
         int checkpoint,
-
         List<String> collectedIds,
         List<String> deadEnemyIds,
         float completionPercent,

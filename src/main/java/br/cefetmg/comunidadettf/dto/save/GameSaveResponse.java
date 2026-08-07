@@ -9,7 +9,6 @@ public record GameSaveResponse(
         String sceneName,
         String checkpointId,
         int checkpoint,
-
         String collectedIdsJson,
         String deadEnemyIdsJson,
         float completionPercent,
