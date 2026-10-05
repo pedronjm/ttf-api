@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -38,6 +39,16 @@ public class GameUser {
 
     @Column(length = 120, nullable = false)
     private String nome;
+
+    @Column(length = 20, nullable = false)
+    private String role = "USER";
+
+    @Lob
+    @Column(name = "avatar_data")
+    private byte[] avatarData;
+
+    @Column(name = "avatar_content_type", length = 100)
+    private String avatarContentType;
 
     @Column(name = "created_at_utc", nullable = false)
     private LocalDateTime createdAtUtc;

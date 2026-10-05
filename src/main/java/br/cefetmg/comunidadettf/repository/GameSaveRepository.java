@@ -16,4 +16,6 @@ public interface GameSaveRepository extends JpaRepository<GameSave, Long> {
     Optional<GameSave> findByUsuario_IdAndSlotIndex(Long usuarioId, Integer slotIndex);
 
     long deleteByUsuario_IdAndSlotIndex(Long usuarioId, Integer slotIndex);
+
+    long deleteByUsuario_Id(Long usuarioId);
 }

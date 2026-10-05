@@ -108,6 +108,17 @@ public class GameSaveService {
                 .deleteByUsuario_IdAndSlotIndex(user.getId(), slotIndex) > 0;
     }
 
+    public long deleteAllForUser(String login) {
+        GameUser user = requireUser(login);
+        return saveRepository.deleteByUsuario_Id(user.getId());
+    }
+
+    public long deleteAll() {
+        long quantity = saveRepository.count();
+        saveRepository.deleteAllInBatch();
+        return quantity;
+    }
+
     private GameUser requireUser(String login) {
         String normalizedLogin = normalize(login);
 

@@ -28,11 +28,12 @@ public class JwtService {
         this.ttl = Duration.ofMinutes(ttlMinutes);
     }
 
-    public String generateToken(String login, String nome) {
+    public String generateToken(String login, String nome, String role) {
         var now = Instant.now();
         return Jwts.builder()
                 .setSubject(login)
                 .claim("nome", nome)
+                .claim("role", role)
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(now.plus(ttl)))
                 .signWith(secretKey)
